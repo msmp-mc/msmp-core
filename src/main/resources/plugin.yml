@@ -1,0 +1,5 @@
+name: MSMPCore
+version: '${version}'
+main: world.anhgelus.msmp.msmpcore.MSMPCore
+api-version: 1.19
+author: ["MSMP", "Anhgelus Morhtuuzh", "Akik4"]
