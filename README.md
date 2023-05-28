@@ -15,7 +15,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.github.msmp:msmp-core:VERSION'
+    implementation 'com.github.msmp-mc:msmp-core:VERSION'
 }
 ```
 
