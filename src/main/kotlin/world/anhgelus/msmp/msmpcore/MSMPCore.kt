@@ -9,16 +9,18 @@ class MSMPCore: PluginBase() {
     override val pluginName: String = "MSMPCore"
 
     lateinit var playersConf: Config
+    lateinit var config: Config
 
     override fun enable() {
-        MPlayerManager.setup(0)
+        config = Config(this, "config")
         playersConf = Config(this, "players")
 
-        enableConfig()
+        loadConfig()
         loadEvents()
     }
 
-    private fun enableConfig() {
+    private fun loadConfig() {
+        MPlayerManager.setup(config.get().getInt("max-lives", 3))
         val section = playersConf.get().getConfigurationSection("mplayers")!!
         MPlayerManager.importPlayersFromConfig(section)
     }
