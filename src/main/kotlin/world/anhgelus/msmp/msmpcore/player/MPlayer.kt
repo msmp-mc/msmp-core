@@ -2,6 +2,8 @@ package world.anhgelus.msmp.msmpcore.player
 
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
+import org.bukkit.event.entity.EntityDamageEvent
+import org.bukkit.event.entity.PlayerDeathEvent
 import world.anhgelus.msmp.msmpcore.MSMPCore
 import java.util.UUID
 
@@ -65,6 +67,20 @@ class MPlayer private constructor(val player: Player, maxLives: Int, remainingLi
      */
     fun setImmortal(isImmortal: Boolean) {
         this.isImmortal = isImmortal
+    }
+
+    /**
+     * Should be called when the player died
+     *
+     * @param event the PlayerDeathEvent
+     */
+    fun died(event: EntityDamageEvent) {
+        if (isImmortal) {
+            (event.entity as Player).health = 20.0
+        } else {
+            lives.remaining--
+        }
+        TODO("handle death reason")
     }
 
     /**
