@@ -22,7 +22,7 @@ abstract class PluginBase: JavaPlugin() {
         LOGGER.info("$pluginName has been disabled!")
     }
 
-    companion object {
+    open class CompanionBase {
         lateinit var INSTANCE: MSMPCore
             private set
         lateinit var LOGGER: Logger
@@ -31,4 +31,6 @@ abstract class PluginBase: JavaPlugin() {
             return INSTANCE
         }
     }
+
+    companion object : CompanionBase()
 }
