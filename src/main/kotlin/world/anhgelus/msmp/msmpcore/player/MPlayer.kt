@@ -5,6 +5,8 @@ import org.bukkit.entity.Player
 import org.bukkit.event.entity.EntityDamageEvent
 import org.bukkit.event.entity.PlayerDeathEvent
 import world.anhgelus.msmp.msmpcore.MSMPCore
+import world.anhgelus.msmp.msmpcore.utils.MessageParser
+import world.anhgelus.msmp.msmpcore.utils.config.Config
 import java.util.UUID
 
 /**
@@ -72,7 +74,7 @@ class MPlayer private constructor(val player: Player, maxLives: Int, remainingLi
     /**
      * Should be called when the player died
      *
-     * @param event the PlayerDeathEvent
+     * @param event the EntityDamageEvent
      */
     fun died(event: EntityDamageEvent) {
         if (isImmortal) {
@@ -80,7 +82,9 @@ class MPlayer private constructor(val player: Player, maxLives: Int, remainingLi
         } else {
             lives.remaining--
         }
-        TODO("handle death reason")
+        val section = Config(MSMPCore.INSTANCE, "death").get()
+        val message = section.getString("base")!!
+        MessageParser.parseDeathMessage(message, event, section.getConfigurationSection("causes")!!)
     }
 
     /**

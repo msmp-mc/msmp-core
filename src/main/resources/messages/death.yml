@@ -1,0 +1,33 @@
+# usable replacers: player_name player_remaining_lives player_max_lives death_message
+base: "%player_name% %death_message%"
+causes:
+  contact: "" # Damage caused when an entity contacts a block such as a Cactus, Dripstone (Stalagmite) or Berry Bush
+  drowning: "" # Damage caused by running out of air while in water
+  entity_attack: "" # Damage caused when an entity attacks another entity
+  entity_sweep_attack: "" # Damage caused when an entity attacks another entity in a sweep attack
+  projectile: "" # Damage caused when attacked by a projectile
+  suffocation: "" # Damage caused by being put in a block
+  fall: "" # Damage caused when an entity falls a distance greater than 3 blocks
+  fire: "" # Damage caused by direct exposure to fire
+  fire_tick: "" # Damage caused due to burns caused by fire
+  melting: "" # useless but here to avoid errors
+  lava: "" # Damage caused by direct exposure to lava
+  block_explosion: "" # Damage caused by being in the area when a block explodes
+  entity_explosion: "" # Damage caused by being in the area when an entity, such as a Creeper, explodes
+  void: "" # Damage caused by falling into the void
+  lightning: "" # Damage caused by being struck by lightning
+  suicide: "" # useless but here to avoid errors
+  starvation: "" # Damage caused by starving due to having an empty hunger bar
+  poison: "" # Damage caused due to an ongoing poison effect
+  magic: "" # Damage caused by being hit by a damage potion or spell
+  wither: "" # Damage caused by Wither potion effect
+  falling_block: "" # Damage caused by being hit by a falling block which deals damage
+  thorns: "" # Damage caused in retaliation to another attack by the Thorns enchantment
+  dragon_breath: "" # Damage caused by a dragon breathing fire
+  custom: "" # useless but here to avoid errors
+  fly_into_wall: "" # Damage caused when an entity runs into a wall
+  hot_floor: "" # Damage caused when an entity steps on MAGMA_BLOCK
+  cramming: "" # Damage caused when an entity is colliding with too many entities due to the maxEntityCramming game rule
+  dryout: "" # useless but here to avoid errors
+  freeze: "" # Damage caused from freezing
+  sonic_boom: "" # Damage caused by the Sonic Boom attack from Warden
