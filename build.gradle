@@ -6,7 +6,7 @@ plugins {
 apply plugin: 'maven-publish'
 
 group = 'world.anhgelus.msmp'
-version = '0.1.0'
+version = '0.1.1'
 
 repositories {
     mavenCentral()
@@ -32,6 +32,8 @@ java {
     if (JavaVersion.current() < javaVersion) {
         toolchain.languageVersion = JavaLanguageVersion.of(targetJavaVersion)
     }
+    withSourcesJar()
+    withJavadocJar()
 }
 
 tasks.withType(JavaCompile).configureEach {
@@ -39,6 +41,15 @@ tasks.withType(JavaCompile).configureEach {
         options.release = targetJavaVersion
     }
 }
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            from components.java
+        }
+    }
+}
+
 
 processResources {
     def props = [version: version]
