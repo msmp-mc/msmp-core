@@ -3,8 +3,10 @@ plugins {
     id 'org.jetbrains.kotlin.jvm' version '1.8.21'
 }
 
+apply plugin: 'maven-publish'
+
 group = 'world.anhgelus.msmp'
-version = '0.0.1'
+version = '0.1.0'
 
 repositories {
     mavenCentral()
