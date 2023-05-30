@@ -160,6 +160,38 @@ The color code is:
 - `Fatal` - `ChatColor.DARK_RED`
 - `Info` - `ChatColor.GRAY`
 
+#### MessageParser
+
+By default, the message parser do not help you to parse automatically a message.
+It handles just the death messages because it's included in the MSMPCore plugin.
+
+<!--
+TODO: Add documentation about the new `parser(String)` static method
+-->
+
+<!--
+##### MessageParser's Parser
+
+A `MessageParser.Parser` is a data class that helps to parse a message.
+
+This data class takes two parameters:
+- `id` - The id to replace (without the `%`)
+- `replacer` - The replacer of the id
+
+Two methods is present to help you to parse the message:
+- `replace(String)` - Replace every id in the message by the replacer
+- `generateId()` - Generate the id with the `%` and returns it
+
+Example of use:
+```kotlin
+val msg // the message to parse
+val mplayer // the mplayer
+val parsers = listOf(Parser("player_name", mplayer.player.displayName), Parser("player_remaining_lives",
+    mplayer.lives.remaining.toString()), Parser("player_max_lives", mplayer.lives.max.toString()))
+parsers.forEach(Consumer { parser -> msg = parser.replace(message) })
+// msg is now parsed
+```
+-->
 
 ## Technologies
 
