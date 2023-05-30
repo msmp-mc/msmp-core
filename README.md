@@ -46,7 +46,7 @@ These files will be copied at the right place when the plugin is launched for th
 #### Get and use a config
 
 To get a config, you must create a new instance of the `Config` class.
-It takes two arguments: 
+It takes two parameters: 
 - The instance of your plugin's main file 
 - The name of the config
 The name of the config is the name of the `.yml` file present in the resources' folder.
@@ -65,6 +65,78 @@ Example:
 config.get().setString("version", "1.0.0") // get the "FileConfiguration" and set a string with the key "version" and the value "1.0.0"
 config.save() // save the config file
 ```
+
+### MPlayer
+
+The `MPlayer` class is a class that represents a player with custom information stored.
+It must be used when we want to interact with the player.
+
+#### MPlayer's Manager
+
+The `MPlayerManager` object is an object that manages the `MPlayer` instances.
+It must be used when we want to interact with the `MPlayer` instances.
+
+The most important method of this object is the `get(Player)` method.
+See the next section for more information.
+
+The public property `maxLives` is the maximum remaining lives for each player.
+It is set manually by the MSMPCore plugin.
+To change it, you must change the value in the `config.yml` file of the MSMPCore plugin.
+
+The methods `setup(Int)`, `connectionOfPlayer(Player)`, `importPlayersFromConfig(Player)` and `savePlayersInConfig(Player)`
+should not be used by other plugins.
+Use it carefully.
+
+#### Get a MPlayer
+
+To get a `MPlayer`, you must use the `MPlayerManager` object and call the `get(Player)` method.
+This method has a `Player` in parameter. 
+This parameter is the player that you want to get the `MPlayer` instance.
+
+If the player is not registered, the method will create a new `MPlayer` instance and register it automatically.
+
+Example:
+```kotlin
+val player = Bukkit.getPlayer("PlayerName") // get the player
+val mplayer = MPlayerManager.get(player) // get the MPlayer instance of the player
+```
+
+The method `isAlive()` checks if the player is alive.
+Returns the result.
+
+The method `setImmortal()` set the player's immortality.
+
+The method `toPureData()` returns the `MPlayer.PureData` data class of the `MPlayer` instance.
+See the section about `MPlayer's Pure Data` for more information.
+
+The methods `died(EntityDamageEvent)`, `updateOnlineStatus()`, `MPlayer.fromPlayer(Player)` and `MPlayer.fromPureData(MPlayer.PureData)`
+should not be used by other plugins.
+Use it carefully.
+
+#### Information stored in a MPlayer
+
+The `MPlayer` class stores some information about the player.
+
+The stored information are:
+- The player's instance (`Player`)
+- The player's lives (`MPlayer.Lives`)
+
+##### MPlayer.Lives
+
+The `MPlayer.Lives` data class is a data class storing the lives of a player.
+
+It stores the lives of the player and the maximum lives of the player.
+- `maxLives` - The maximum lives of the player
+- `remainingLives` - The remaining lives of the player
+
+#### MPlayer's Pure Data
+
+To store data about `MPlayer` in a config file, we use the `MPlayer.PureData` data class.
+
+This data class just contains the important information about the `MPlayer` instance:
+- `player` - UUID of the `Player` instance
+- `remainingLives` - Remaining lives
+- `isImmortal` - Immortality status
 
 ## Technologies
 
