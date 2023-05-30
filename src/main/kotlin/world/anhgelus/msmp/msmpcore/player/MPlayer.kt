@@ -116,10 +116,24 @@ class MPlayer private constructor(val player: Player, maxLives: Int, remainingLi
     }
 
     companion object {
+        /**
+         * If you want to get a MPlayer instance, do not use this to get a MPlayer instance!
+         *
+         * Create a new MPlayer instance with max lives.
+         *
+         * @see MPlayerManager.get
+         */
         fun fromPlayer(player: Player): MPlayer {
             return MPlayer(player, MPlayerManager.maxLives, MPlayerManager.maxLives)
         }
 
+        /**
+         * If you want to get a MPlayer instance, do not use this to get a MPlayer instance!
+         *
+         * Create a new MPlayer instance from pure data.
+         *
+         * @see MPlayerManager.get
+         */
         fun fromPureData(pure: PureData): MPlayer {
             return MPlayer(Bukkit.getPlayer(pure.player)!!, MPlayerManager.maxLives, pure.remainingLives).also {
                 it.isImmortal = pure.isImmortal
