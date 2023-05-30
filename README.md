@@ -138,6 +138,29 @@ This data class just contains the important information about the `MPlayer` inst
 - `remainingLives` - Remaining lives
 - `isImmortal` - Immortality status
 
+### Utils
+
+The package `world.anhgelus.msmp.msmpcore.utils` contains some useful classes.
+
+#### ChatHelper
+
+The `ChatHelper` object is an object that helps to send messages with a consistent style.
+
+There are two types of static methods:
+- `send...ToPlayer(Player, String)`- Send a message to a player 
+- `send...(String)`- Broadcast a message
+
+The `...` could be removed or replaced by `Success`, `Warning`, `Error`, `Fatal` or `Info`.
+`Success` is for a successful message, `Warning` for a warning, etc.
+
+The color code is:
+- `Success` - `ChatColor.GREEN`
+- `Warning` - `ChatColor.YELLOW`
+- `Error` - `ChatColor.RED`
+- `Fatal` - `ChatColor.DARK_RED`
+- `Info` - `ChatColor.GRAY`
+
+
 ## Technologies
 
 - Kotlin 1.8.21
