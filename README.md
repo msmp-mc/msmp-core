@@ -165,11 +165,9 @@ The color code is:
 By default, the message parser do not help you to parse automatically a message.
 It handles just the death messages because it's included in the MSMPCore plugin.
 
-<!--
-TODO: Add documentation about the new `parser(String)` static method
--->
+The method `parse(String, List<MessageParser.Parser>)` is the method that you must use to parse a message.
+It automatically parses the message with the provided parsers.
 
-<!--
 ##### MessageParser's Parser
 
 A `MessageParser.Parser` is a data class that helps to parse a message.
@@ -182,16 +180,27 @@ Two methods is present to help you to parse the message:
 - `replace(String)` - Replace every id in the message by the replacer
 - `generateId()` - Generate the id with the `%` and returns it
 
-Example of use:
+Example:
 ```kotlin
-val msg // the message to parse
+var msg // the message to parse
 val mplayer // the mplayer
 val parsers = listOf(Parser("player_name", mplayer.player.displayName), Parser("player_remaining_lives",
     mplayer.lives.remaining.toString()), Parser("player_max_lives", mplayer.lives.max.toString()))
 parsers.forEach(Consumer { parser -> msg = parser.replace(message) })
 // msg is now parsed
 ```
--->
+
+This code is useless because it is already done by the `MessageParser.parse(String, List<MessageParser.Parser>)` method.
+
+Example:
+```kotlin
+val message // the message to parse
+val mplayer // the mplayer
+val parsers = listOf(Parser("player_name", mplayer.player.displayName), Parser("player_remaining_lives",
+    mplayer.lives.remaining.toString()), Parser("player_max_lives", mplayer.lives.max.toString()))
+val parsed = MessageParser.parse(message, parsers)
+// message is now parsed
+```
 
 ## Technologies
 
