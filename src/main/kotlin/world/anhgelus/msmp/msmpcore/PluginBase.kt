@@ -13,6 +13,7 @@ abstract class PluginBase: JavaPlugin() {
     override fun onEnable() {
         // init vars
         LOGGER = logger
+        INSTANCE = this
         enable()
         LOGGER.info("$pluginName has been enabled!")
     }
@@ -23,11 +24,10 @@ abstract class PluginBase: JavaPlugin() {
     }
 
     open class CompanionBase {
-        lateinit var INSTANCE: MSMPCore
-            private set
+        lateinit var INSTANCE: PluginBase
         lateinit var LOGGER: Logger
 
-        fun getInstance(): MSMPCore {
+        fun getInstance(): PluginBase {
             return INSTANCE
         }
     }
