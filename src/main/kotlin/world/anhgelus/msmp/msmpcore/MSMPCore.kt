@@ -21,7 +21,7 @@ class MSMPCore: PluginBase() {
 
     private fun loadConfig() {
         MPlayerManager.setup(config.get().getInt("max-lives", 3))
-        val section = playersConf.get().getConfigurationSection("mplayers")!!
+        val section = playersConf.get().getConfigurationSection("mplayers") ?: return
         MPlayerManager.importPlayersFromConfig(section)
     }
 
