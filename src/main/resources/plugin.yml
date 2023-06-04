@@ -5,3 +5,4 @@ api-version: 1.19
 author: ["MSMP", "Anhgelus Morhtuuzh", "Akik4"]
 depend:
   - kotlin-stdlib
+load: STARTUP
