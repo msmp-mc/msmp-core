@@ -89,6 +89,21 @@ class MPlayer private constructor(val player: Player, maxLives: Int, remainingLi
     }
 
     /**
+     * Should be called when the player gain a new life
+     *
+     * @param newLife the function to call when the player gain a new life after being dead
+     */
+    fun gainANewLife(newLife: (MPlayer) -> Unit) {
+        if (isImmortal) {
+            return
+        }
+        if (!isAlive()) {
+            newLife(this)
+        }
+        lives.remaining++
+    }
+
+    /**
      * Update the online status of the player
      *
      * Should be used when the player join or leave the server
