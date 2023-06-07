@@ -3,6 +3,7 @@ package world.anhgelus.msmp.msmpcore.utils
 import org.bukkit.configuration.ConfigurationSection
 import org.bukkit.entity.Player
 import org.bukkit.event.entity.EntityDamageEvent
+import world.anhgelus.msmp.msmpcore.MSMPCore
 import world.anhgelus.msmp.msmpcore.player.MPlayerManager
 import java.util.*
 import java.util.function.Consumer
@@ -20,8 +21,9 @@ object MessageParser {
         }
         fun replace(message: String): String {
             var msg = message
-            while (msg.contains(generateId())) {
-                msg = msg.replace(generateId(), replacer)
+            val id = generateId()
+            while (msg.contains(id)) {
+                msg = msg.replace(id, replacer)
             }
             return msg
         }
@@ -36,7 +38,9 @@ object MessageParser {
      */
     fun parse(message: String, parsers: List<Parser>): String {
         var msg = message
-        parsers.forEach(Consumer { parser -> msg = parser.replace(message) })
+        parsers.forEach { parser ->
+            msg = parser.replace(msg)
+        }
         return msg
     }
 
@@ -53,6 +57,7 @@ object MessageParser {
         val player = event.entity as Player
         val mplayer = MPlayerManager.get(player)
         val causeMsg = section.getString(event.cause.toString().lowercase(Locale.getDefault()))!!
+        MSMPCore.LOGGER.info("PlayerName: ${player.displayName}")
         val parsers = listOf(Parser("player_name", player.displayName), Parser("player_remaining_lives",
             mplayer.lives.remaining.toString()), Parser("player_max_lives", mplayer.lives.max.toString()),
             Parser("death_message", causeMsg))
