@@ -113,6 +113,9 @@ The method `died(EntityDamageEvent, (Mplayer, EntityDamageEvent) -> Unit)` is ha
 The first parameter is the `EntityDamageEvent` of the death.
 The second parameter is a lambda that is called when the player is dead, and he has no more lives.
 
+The method `gainANewLife((Mplayer) -> Unit)` is handling when the MPlayer get a new life.
+The parameter is a lambda that is called when the player gain a new life after being dead.
+
 The methods `updateOnlineStatus()`, `MPlayer.fromPlayer(Player)` and `MPlayer.fromPureData(MPlayer.PureData)` should not 
 be used by other plugins.
 Use it carefully.
