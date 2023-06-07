@@ -82,7 +82,7 @@ class MPlayer private constructor(val player: Player, maxLives: Int, remainingLi
         } else {
             lives.remaining--
         }
-        val section = Config(MSMPCore.INSTANCE, "death").get()
+        val section = Config(MSMPCore.INSTANCE, "messages/death").get()
         val message = section.getString("base")!!
         MessageParser.parseDeathMessage(message, event, section.getConfigurationSection("causes")!!)
         if (lives.remaining == 0) onDeath(this, event)
