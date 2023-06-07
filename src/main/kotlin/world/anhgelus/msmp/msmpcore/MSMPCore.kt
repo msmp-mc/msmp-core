@@ -12,6 +12,9 @@ class MSMPCore: PluginBase() {
     lateinit var config: Config
 
     override fun enable() {
+        LOGGER = logger
+        INSTANCE = this
+
         config = Config(this, "config")
         playersConf = Config(this, "players")
 

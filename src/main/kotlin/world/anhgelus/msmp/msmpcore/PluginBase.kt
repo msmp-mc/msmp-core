@@ -12,8 +12,6 @@ abstract class PluginBase: JavaPlugin() {
 
     override fun onEnable() {
         // init vars
-        setLogger(logger)
-        setInstance(this)
         enable()
         LOGGER.info("$pluginName has been enabled!")
     }
@@ -29,14 +27,6 @@ abstract class PluginBase: JavaPlugin() {
 
         fun getInstance(): PluginBase {
             return INSTANCE
-        }
-
-        fun setInstance(instance: PluginBase) {
-            INSTANCE = instance
-        }
-
-        fun setLogger(logger: Logger) {
-            LOGGER = logger
         }
     }
 
