@@ -19,10 +19,11 @@ object MessageParser {
             return "%$id%"
         }
         fun replace(message: String): String {
-            while (message.contains(generateId())) {
-                message.replace(generateId(), replacer)
+            var msg = message
+            while (msg.contains(generateId())) {
+                msg = msg.replace(generateId(), replacer)
             }
-            return message
+            return msg
         }
     }
 
