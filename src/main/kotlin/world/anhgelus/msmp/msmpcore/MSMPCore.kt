@@ -38,8 +38,9 @@ class MSMPCore: PluginBase() {
     }
 
     private fun disableConfig() {
-        val section = playersConf.get().getConfigurationSection("mplayers")!!
+        val section = playersConf.get().getConfigurationSection("mplayers") ?: playersConf.get().createSection("mplayers")
         MPlayerManager.savePlayersInConfig(section)
+        playersConf.save()
     }
 
     companion object : CompanionBase()

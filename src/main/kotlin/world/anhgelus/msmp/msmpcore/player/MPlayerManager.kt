@@ -48,7 +48,11 @@ object MPlayerManager {
     fun importPlayersFromConfig(section: ConfigurationSection) {
         val keys = section.getKeys(false)
         keys.forEach {
-            val mp: MPlayer.PureData = section.get(it)!! as MPlayer.PureData
+            val mp: MPlayer.PureData? = MPlayer.PureData.fromString(section.getString(it)!!)
+            if (mp == null) {
+                MSMPCore.LOGGER.warning("Player $it has invalid data in config")
+                return@forEach
+            }
             val p = Bukkit.getPlayer(mp.player)
             if (p == null) {
                 unloadPlayers[mp.player] = mp
@@ -63,7 +67,8 @@ object MPlayerManager {
      */
     fun savePlayersInConfig(section: ConfigurationSection) {
         players.forEach { (p, it) ->
-            section.set(p.uniqueId.toString(), it.toPureData())
+            MSMPCore.LOGGER.info("Saving player ${p.name} in config")
+            section.set(p.uniqueId.toString(), it.toPureData().toString())
         }
     }
 }

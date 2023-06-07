@@ -42,7 +42,27 @@ class MPlayer private constructor(val player: Player, maxLives: Int, remainingLi
      * @param remainingLives the remaining lives of the player
      * @param player the player
      */
-    data class PureData(val isImmortal: Boolean, val remainingLives: Int, val player: UUID)
+    data class PureData(val isImmortal: Boolean, val remainingLives: Int, val player: UUID) {
+        override fun toString(): String {
+            return "PureData(isImmortal=$isImmortal;remainingLives=$remainingLives;player=$player)"
+        }
+
+        companion object {
+            fun fromString(str: String): PureData? {
+                if (!str.startsWith("PureData(") && !str.endsWith(")")) return null
+                val data = str.substring(9, str.length - 1).split(";")
+                if (data.size != 3) return null
+                try {
+                    val isImmortal = data[0].substring(11).toBoolean()
+                    val remainingLives = data[1].substring(15).toInt()
+                    val player = UUID.fromString(data[2].substring(7))
+                    return PureData(isImmortal, remainingLives, player)
+                } catch (e: Exception) {
+                    return null
+                }
+            }
+        }
+    }
 
     val lives: Lives
     var isImmortal: Boolean = false
