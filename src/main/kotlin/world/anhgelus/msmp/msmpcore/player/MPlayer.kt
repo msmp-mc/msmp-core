@@ -3,7 +3,6 @@ package world.anhgelus.msmp.msmpcore.player
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import org.bukkit.event.entity.EntityDamageEvent
-import org.bukkit.event.entity.PlayerDeathEvent
 import world.anhgelus.msmp.msmpcore.MSMPCore
 import world.anhgelus.msmp.msmpcore.utils.MessageParser
 import world.anhgelus.msmp.msmpcore.utils.config.Config
@@ -75,8 +74,9 @@ class MPlayer private constructor(val player: Player, maxLives: Int, remainingLi
      * Should be called when the player died
      *
      * @param event the EntityDamageEvent
+     * @param onDeath the function to call when the player died and has no more lives
      */
-    fun died(event: EntityDamageEvent) {
+    fun died(event: EntityDamageEvent, onDeath: (MPlayer, EntityDamageEvent) -> Unit) {
         if (isImmortal) {
             (event.entity as Player).health = 20.0
         } else {
@@ -85,6 +85,7 @@ class MPlayer private constructor(val player: Player, maxLives: Int, remainingLi
         val section = Config(MSMPCore.INSTANCE, "death").get()
         val message = section.getString("base")!!
         MessageParser.parseDeathMessage(message, event, section.getConfigurationSection("causes")!!)
+        if (lives.remaining == 0) onDeath(this, event)
     }
 
     /**

@@ -20,11 +20,4 @@ class MPlayerListener: Listener {
     fun onPlayerQuit(e: PlayerQuitEvent) {
         MPlayerManager.get(e.player).updateOnlineStatus()
     }
-
-    @EventHandler
-    fun onPlayerDeath(e: EntityDamageEvent) {
-        if (e.entity !is Player) return
-        if (e.finalDamage <= 0) return
-        MPlayerManager.get(e.entity as Player).died(e)
-    }
 }
