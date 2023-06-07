@@ -1,9 +1,11 @@
 package world.anhgelus.msmp.msmpcore.player
 
 import org.bukkit.Bukkit
+import org.bukkit.GameMode
 import org.bukkit.entity.Player
 import org.bukkit.event.entity.EntityDamageEvent
 import world.anhgelus.msmp.msmpcore.MSMPCore
+import world.anhgelus.msmp.msmpcore.utils.ChatHelper
 import world.anhgelus.msmp.msmpcore.utils.MessageParser
 import world.anhgelus.msmp.msmpcore.utils.config.Config
 import java.util.UUID
@@ -87,6 +89,7 @@ class MPlayer private constructor(val player: Player, maxLives: Int, remainingLi
      * Set the immortal status of the player
      */
     fun setImmortal(isImmortal: Boolean) {
+        player.isInvulnerable = false
         this.isImmortal = isImmortal
     }
 
@@ -151,6 +154,13 @@ class MPlayer private constructor(val player: Player, maxLives: Int, remainingLi
         return PureData(isImmortal, lives.remaining, player.uniqueId)
     }
 
+    /**
+     * Set the player's condition to default
+     */
+    fun toDefaultCondition() {
+        toDefaultCondition(this)
+    }
+
     companion object {
         /**
          * If you want to get a MPlayer instance, do not use this to get a MPlayer instance!
@@ -174,6 +184,34 @@ class MPlayer private constructor(val player: Player, maxLives: Int, remainingLi
             return MPlayer(Bukkit.getPlayer(pure.player)!!, MPlayerManager.maxLives, pure.remainingLives).also {
                 it.isImmortal = pure.isImmortal
             }
+        }
+
+        /**
+         * Set the player's condition to default
+         *
+         * @param player the player
+         */
+        fun toDefaultCondition(player: Player) {
+            if(player.isOp){
+                ChatHelper.sendInfoToPlayer(player, "As administrator you gamemode hasn't been changed")
+            } else {
+                player.gameMode = GameMode.SURVIVAL
+            }
+            player.isInvulnerable = false
+            player.canPickupItems = true
+            player.health = 20.0
+            player.foodLevel = 20
+        }
+
+        /**
+         * Set the player's condition to default
+         *
+         * @param player the player
+         */
+        fun toDefaultCondition(player: MPlayer) {
+            player.isImmortal = false
+            player.lives.remaining = MPlayerManager.maxLives
+            toDefaultCondition(player.player)
         }
     }
 }
