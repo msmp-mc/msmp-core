@@ -109,8 +109,12 @@ The method `setImmortal()` set the player's immortality.
 The method `toPureData()` returns the `MPlayer.PureData` data class of the `MPlayer` instance.
 See the section about `MPlayer's Pure Data` for more information.
 
-The methods `died(EntityDamageEvent)`, `updateOnlineStatus()`, `MPlayer.fromPlayer(Player)` and `MPlayer.fromPureData(MPlayer.PureData)`
-should not be used by other plugins.
+The method `died(EntityDamageEvent, (Mplayer, EntityDamageEvent) -> Unit)` is handling the death of the MPlayer.
+The first parameter is the `EntityDamageEvent` of the death.
+The second parameter is a lambda that is called when the player is dead, and he has no more lives.
+
+The methods `updateOnlineStatus()`, `MPlayer.fromPlayer(Player)` and `MPlayer.fromPureData(MPlayer.PureData)` should not 
+be used by other plugins.
 Use it carefully.
 
 #### Information stored in a MPlayer
