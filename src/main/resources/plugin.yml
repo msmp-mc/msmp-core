@@ -6,3 +6,4 @@ author: ["MSMP", "Anhgelus Morhtuuzh", "Akik4"]
 depend:
   - kotlin-stdlib
 load: STARTUP
+folia-supported: true
