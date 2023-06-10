@@ -4,12 +4,14 @@ import org.bukkit.Bukkit
 import world.anhgelus.msmp.msmpcore.event.MPlayerListener
 import world.anhgelus.msmp.msmpcore.player.MPlayerManager
 import world.anhgelus.msmp.msmpcore.utils.config.Config
+import world.anhgelus.msmp.msmpcore.utils.config.ConfigAPI
 
 class MSMPCore: PluginBase() {
-    override val pluginName: String = "MSMPCore"
+    override val pluginName = "MSMPCore"
+    override val configHelper = ConfigAPI
 
-    lateinit var playersConf: Config
-    lateinit var config: Config
+    private lateinit var playersConf: Config
+    private lateinit var config: Config
 
     override fun enable() {
         LOGGER = logger

@@ -8,6 +8,7 @@ import world.anhgelus.msmp.msmpcore.MSMPCore
 import world.anhgelus.msmp.msmpcore.utils.ChatHelper
 import world.anhgelus.msmp.msmpcore.utils.MessageParser
 import world.anhgelus.msmp.msmpcore.utils.config.Config
+import world.anhgelus.msmp.msmpcore.utils.config.ConfigAPI
 import java.util.UUID
 
 /**
@@ -105,7 +106,7 @@ class MPlayer private constructor(val player: Player, maxLives: Int, remainingLi
         } else {
             lives.remaining--
         }
-        val section = Config(MSMPCore.INSTANCE, "messages/death").get()
+        val section = ConfigAPI.getConfig("messages/death").get()
         val message = section.getString("base")!!
         MessageParser.parseDeathMessage(message, event, section.getConfigurationSection("causes")!!)
         if (lives.remaining == 0) onDeath(this, event)
