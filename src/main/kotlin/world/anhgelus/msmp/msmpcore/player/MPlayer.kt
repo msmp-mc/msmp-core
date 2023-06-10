@@ -120,10 +120,10 @@ class MPlayer private constructor(val player: Player, maxLives: Int, remainingLi
         if (isImmortal) {
             return
         }
+        lives.remaining++
         if (!isAlive()) {
             newLife(this)
         }
-        lives.remaining++
     }
 
     /**
@@ -152,11 +152,7 @@ class MPlayer private constructor(val player: Player, maxLives: Int, remainingLi
      */
     fun updateOnlineStatus() {
         val bPlayer = Bukkit.getPlayer(player.uniqueId)
-        if (bPlayer != null) {
-            this.isOnline = bPlayer.isOnline
-        } else {
-            this.isOnline = false
-        }
+        isOnline = bPlayer?.isOnline ?: false
         MSMPCore.LOGGER.info("Player ${player.name}'s online status has been updated: $isOnline")
     }
 
