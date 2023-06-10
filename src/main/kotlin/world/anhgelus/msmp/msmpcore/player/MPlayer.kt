@@ -120,8 +120,9 @@ class MPlayer private constructor(val player: Player, maxLives: Int, remainingLi
         if (isImmortal) {
             return
         }
+        val alive = isAlive()
         lives.remaining++
-        if (!isAlive()) {
+        if (!alive) {
             newLife(this)
         }
     }
