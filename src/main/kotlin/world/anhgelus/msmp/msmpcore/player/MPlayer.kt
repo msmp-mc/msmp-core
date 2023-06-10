@@ -2,6 +2,7 @@ package world.anhgelus.msmp.msmpcore.player
 
 import org.bukkit.Bukkit
 import org.bukkit.GameMode
+import org.bukkit.attribute.Attribute
 import org.bukkit.entity.Player
 import org.bukkit.event.entity.EntityDamageEvent
 import world.anhgelus.msmp.msmpcore.MSMPCore
@@ -101,7 +102,7 @@ class MPlayer private constructor(val player: Player, maxLives: Int, remainingLi
      */
     fun died(event: EntityDamageEvent, onDeath: (MPlayer, EntityDamageEvent) -> Unit) {
         if (isImmortal) {
-            (event.entity as Player).health = 20.0
+            (event.entity as Player).health = (event.entity as Player).getAttribute(Attribute.GENERIC_MAX_HEALTH)!!.value
         } else {
             lives.remaining--
         }
@@ -213,7 +214,7 @@ class MPlayer private constructor(val player: Player, maxLives: Int, remainingLi
             }
             player.isInvulnerable = false
             player.canPickupItems = true
-            player.health = 20.0
+            player.health = player.getAttribute(Attribute.GENERIC_MAX_HEALTH)!!.value
             player.foodLevel = 20
         }
 
