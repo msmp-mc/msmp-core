@@ -38,6 +38,27 @@ is started and is stopped.
 
 Creating configurations' file is pretty annoying, so we have decided to fix this by providing a class doing this for you.
 
+There is two classes:
+- `Config` - The main class
+- `ConfigHelper` - A helper class which to be extended by an object
+
+#### ConfigHelper
+
+When you create a new plugin with the `PluginBase` class, you must provide an object using the `ConfigHelper`.
+Let's call it `ConfigAPI`.
+
+```kotlin
+object ConfigAPI : ConfigHelper()
+```
+
+After creating it, you must register it inside your plugin.
+
+```kotlin
+override val configHelper = ConfigAPI
+```
+
+Now, you can use it to get a config.
+
 #### Create a new config
 
 To create a new config, just create a new `.yml` file in the resources' folder.
@@ -45,15 +66,18 @@ These files will be copied at the right place when the plugin is launched for th
 
 #### Get and use a config
 
-To get a config, you must create a new instance of the `Config` class.
-It takes two parameters: 
-- The instance of your plugin's main file 
+To get a config, you must use the object using `ConfigHelper`.
+Let's suppose you call it `ConfigAPI`.
+
+To get a config, you must call the `ConfigAPI.getConfig()`.
+It takes one parameter:  
 - The name of the config
+
 The name of the config is the name of the `.yml` file present in the resources' folder.
 
 Example:
 ```kotlin
-val config = Config(YourPlugin.getInstance(), "config") // get the file "config.yml" presents in the config file of the plugin "YourPlugin"
+val config = ConfigAPI.getConfig("config") // get the file "config.yml"
 ```
 
 To use it, there are two methods very useful:
