@@ -7,9 +7,8 @@ import org.bukkit.event.entity.EntityDamageEvent
 import world.anhgelus.msmp.msmpcore.MSMPCore
 import world.anhgelus.msmp.msmpcore.utils.ChatHelper
 import world.anhgelus.msmp.msmpcore.utils.MessageParser
-import world.anhgelus.msmp.msmpcore.utils.config.Config
 import world.anhgelus.msmp.msmpcore.utils.config.ConfigAPI
-import java.util.UUID
+import java.util.*
 
 /**
  * Custom Player class to store information about the player
@@ -132,14 +131,31 @@ class MPlayer private constructor(val player: Player, maxLives: Int, remainingLi
      *
      * Should be used when the player join or leave the server
      *
+     * @param isOnline the online status of the player
+     */
+    fun updateOnlineStatus(isOnline: Boolean) {
+        val bPlayer = Bukkit.getPlayer(player.uniqueId)
+        if (bPlayer != null) {
+            this.isOnline = isOnline
+        } else {
+            this.isOnline = false
+        }
+        MSMPCore.LOGGER.info("Player ${player.name}'s online status has been updated: $isOnline")
+    }
+
+    /**
+     * Update the online status of the player
+     *
+     * Should be used when the player join or leave the server
+     *
      * Automatically called when a new instance of MPlayer is created
      */
     fun updateOnlineStatus() {
         val bPlayer = Bukkit.getPlayer(player.uniqueId)
         if (bPlayer != null) {
-            isOnline = bPlayer.isOnline
+            this.isOnline = bPlayer.isOnline
         } else {
-            isOnline = false
+            this.isOnline = false
         }
         MSMPCore.LOGGER.info("Player ${player.name}'s online status has been updated: $isOnline")
     }

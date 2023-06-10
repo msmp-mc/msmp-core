@@ -18,6 +18,6 @@ class MPlayerListener: Listener {
 
     @EventHandler(priority = EventPriority.HIGH)
     fun onPlayerQuit(e: PlayerQuitEvent) {
-        MPlayerManager.get(e.player).updateOnlineStatus()
+        MPlayerManager.get(e.player).updateOnlineStatus(false)
     }
 }
