@@ -3,7 +3,6 @@ package world.anhgelus.msmp.msmpcore.utils.config;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
-import world.anhgelus.msmp.msmpcore.MSMPCore;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,6 +12,7 @@ import java.util.logging.Level;
 
 /**
  * @author Robotv2
+ * @see world.anhgelus.msmp.msmpcore.utils.config.ConfigHelper
  */
 public class Config {
 
@@ -23,9 +23,9 @@ public class Config {
     private FileConfiguration databaseConfig = null;
 
     /**
-     *
      * @param main Plugin's main file
      * @param name Name of the configuration
+     * @deprecated Internal use only!
      */
     public Config(Plugin main, String name) {
         this.main = main;

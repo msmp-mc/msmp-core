@@ -2,6 +2,9 @@ package world.anhgelus.msmp.msmpcore.utils.config
 
 import world.anhgelus.msmp.msmpcore.PluginBase
 
+/**
+ * Helper for configs (getting them)
+ */
 open class ConfigHelper {
     private lateinit var plugin: PluginBase
 
