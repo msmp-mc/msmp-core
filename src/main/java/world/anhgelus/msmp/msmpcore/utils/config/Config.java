@@ -19,7 +19,7 @@ public class Config {
     private final Plugin main;
     private final String name;
 
-    private File database = null;
+    private final File database;
     private FileConfiguration databaseConfig = null;
 
     /**
@@ -32,14 +32,8 @@ public class Config {
     public Config(Plugin main, String name) {
         this.main = main;
         this.name = name;
-        this.setup();
-    }
 
-    /**
-     * Set up the configuration
-     */
-    public void setup() {
-        if (database == null) database = new File(main.getDataFolder(), name + ".yml");
+        database = new File(main.getDataFolder(), name + ".yml");
         if (!database.exists()) {
             if (database.getParentFile().exists()) database.getParentFile().mkdir();
             main.saveResource(name + ".yml", false);
@@ -59,7 +53,6 @@ public class Config {
      * Save the configuration
      */
     public void save() {
-        if (database == null || databaseConfig == null) return;
         try {
             get().save(database);
         } catch (IOException e) {
@@ -71,10 +64,9 @@ public class Config {
      * Reload the configuration
      */
     public void reload() {
-        if (database == null) database = new File(main.getDataFolder(), name + ".yml");
         databaseConfig = YamlConfiguration.loadConfiguration(database);
 
-        InputStream defaultStream = main.getResource(name + ".yml");
+        final InputStream defaultStream = main.getResource(name + ".yml");
         if (defaultStream != null) {
             YamlConfiguration defaultConfig = YamlConfiguration.loadConfiguration(new InputStreamReader(defaultStream));
             databaseConfig.setDefaults(defaultConfig);
