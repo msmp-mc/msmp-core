@@ -56,7 +56,8 @@ public class Config {
         try {
             get().save(database);
         } catch (IOException e) {
-            main.getLogger().log(Level.SEVERE, "Erreur lors de la sauvegarde de la configuration " + name + ".yml");
+            main.getLogger().log(Level.SEVERE, "Error while saving the configuration " + name );
+            e.printStackTrace();
         }
     }
 
