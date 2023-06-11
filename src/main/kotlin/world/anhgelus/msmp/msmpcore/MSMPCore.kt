@@ -1,6 +1,5 @@
 package world.anhgelus.msmp.msmpcore
 
-import org.bukkit.Bukkit
 import world.anhgelus.msmp.msmpcore.event.MPlayerListener
 import world.anhgelus.msmp.msmpcore.player.MPlayerManager
 import world.anhgelus.msmp.msmpcore.utils.config.Config
@@ -21,18 +20,14 @@ class MSMPCore: PluginBase() {
         playersConf = Config(this, "players")
 
         loadConfig()
-        loadEvents()
+
+        events.add(MPlayerListener)
     }
 
     private fun loadConfig() {
         MPlayerManager.setup(config.get().getInt("max-lives", 3))
         val section = playersConf.get().getConfigurationSection("mplayers") ?: return
         MPlayerManager.importPlayersFromConfig(section)
-    }
-
-    private fun loadEvents() {
-        val manager = Bukkit.getPluginManager()
-        manager.registerEvents(MPlayerListener(), this)
     }
 
     override fun disable() {

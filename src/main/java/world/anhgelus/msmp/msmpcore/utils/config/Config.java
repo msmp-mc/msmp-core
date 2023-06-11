@@ -11,7 +11,7 @@ import java.io.InputStreamReader;
 import java.util.logging.Level;
 
 /**
- * @author Robotv2
+ * @author Robotv2, Anhgelus Morhtuuzh
  * @see world.anhgelus.msmp.msmpcore.utils.config.ConfigHelper
  */
 public class Config {
@@ -19,25 +19,21 @@ public class Config {
     private final Plugin main;
     private final String name;
 
-    private File database = null;
+    private final File database;
     private FileConfiguration databaseConfig = null;
 
     /**
+     * Internal use only!
+     *
      * @param main Plugin's main file
      * @param name Name of the configuration
-     * @deprecated Internal use only!
+     * @see world.anhgelus.msmp.msmpcore.utils.config.ConfigHelper
      */
     public Config(Plugin main, String name) {
         this.main = main;
         this.name = name;
-        this.setup();
-    }
 
-    /**
-     * Set up the configuration
-     */
-    public void setup() {
-        if (this.database == null) database = new File(main.getDataFolder(), name + ".yml");
+        database = new File(main.getDataFolder(), name + ".yml");
         if (!database.exists()) {
             if (database.getParentFile().exists()) database.getParentFile().mkdir();
             main.saveResource(name + ".yml", false);
@@ -57,11 +53,11 @@ public class Config {
      * Save the configuration
      */
     public void save() {
-        if (database == null || databaseConfig == null) return;
         try {
             get().save(database);
         } catch (IOException e) {
-            main.getLogger().log(Level.SEVERE, "Erreur lors de la sauvegarde de la configuration " + name + ".yml");
+            main.getLogger().log(Level.SEVERE, "Error while saving the configuration " + name );
+            e.printStackTrace();
         }
     }
 
@@ -69,13 +65,12 @@ public class Config {
      * Reload the configuration
      */
     public void reload() {
-        if (this.database == null) database = new File(main.getDataFolder(), name + ".yml");
-        this.databaseConfig = YamlConfiguration.loadConfiguration(database);
+        databaseConfig = YamlConfiguration.loadConfiguration(database);
 
-        InputStream defaultStream = main.getResource(name + ".yml");
+        final InputStream defaultStream = main.getResource(name + ".yml");
         if (defaultStream != null) {
             YamlConfiguration defaultConfig = YamlConfiguration.loadConfiguration(new InputStreamReader(defaultStream));
-            this.databaseConfig.setDefaults(defaultConfig);
+            databaseConfig.setDefaults(defaultConfig);
         }
     }
 }
