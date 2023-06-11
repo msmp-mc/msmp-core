@@ -177,6 +177,7 @@ class MPlayer private constructor(val player: Player, maxLives: Int, remainingLi
 
     companion object {
         /**
+         * Internal use only!
          * If you want to get a MPlayer instance, do not use this to get a MPlayer instance!
          *
          * Create a new MPlayer instance with max lives.
@@ -188,6 +189,7 @@ class MPlayer private constructor(val player: Player, maxLives: Int, remainingLi
         }
 
         /**
+         * Internal use only!
          * If you want to get a MPlayer instance, do not use this to get a MPlayer instance!
          *
          * Create a new MPlayer instance from pure data.
