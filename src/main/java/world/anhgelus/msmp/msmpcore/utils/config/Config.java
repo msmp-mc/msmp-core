@@ -23,9 +23,11 @@ public class Config {
     private FileConfiguration databaseConfig = null;
 
     /**
+     * Internal use only!
+     *
      * @param main Plugin's main file
      * @param name Name of the configuration
-     * @deprecated Internal use only!
+     * @see world.anhgelus.msmp.msmpcore.utils.config.ConfigHelper
      */
     public Config(Plugin main, String name) {
         this.main = main;

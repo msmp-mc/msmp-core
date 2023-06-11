@@ -1,5 +1,7 @@
 package world.anhgelus.msmp.msmpcore
 
+import org.bukkit.Bukkit
+import org.bukkit.event.Listener
 import org.bukkit.plugin.java.JavaPlugin
 import world.anhgelus.msmp.msmpcore.utils.config.ConfigHelper
 import java.util.logging.Logger
@@ -7,6 +9,8 @@ import java.util.logging.Logger
 abstract class PluginBase: JavaPlugin() {
     abstract val pluginName: String
     abstract val configHelper: ConfigHelper
+
+    protected val events = mutableListOf<Listener>()
 
     abstract fun enable()
 
@@ -18,6 +22,10 @@ abstract class PluginBase: JavaPlugin() {
         configHelper.init(this)
 
         enable()
+        if (events.size != 0) {
+            val manager = Bukkit.getPluginManager()
+            events.forEach { manager.registerEvents(it, this) }
+        }
         LOGGER.info("$pluginName has been enabled!")
     }
 
