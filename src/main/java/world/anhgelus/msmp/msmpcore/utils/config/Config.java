@@ -11,7 +11,7 @@ import java.io.InputStreamReader;
 import java.util.logging.Level;
 
 /**
- * @author Robotv2
+ * @author Robotv2, Anhgelus Morhtuuzh
  * @see world.anhgelus.msmp.msmpcore.utils.config.ConfigHelper
  */
 public class Config {
@@ -39,7 +39,7 @@ public class Config {
      * Set up the configuration
      */
     public void setup() {
-        if (this.database == null) database = new File(main.getDataFolder(), name + ".yml");
+        if (database == null) database = new File(main.getDataFolder(), name + ".yml");
         if (!database.exists()) {
             if (database.getParentFile().exists()) database.getParentFile().mkdir();
             main.saveResource(name + ".yml", false);
@@ -71,13 +71,13 @@ public class Config {
      * Reload the configuration
      */
     public void reload() {
-        if (this.database == null) database = new File(main.getDataFolder(), name + ".yml");
-        this.databaseConfig = YamlConfiguration.loadConfiguration(database);
+        if (database == null) database = new File(main.getDataFolder(), name + ".yml");
+        databaseConfig = YamlConfiguration.loadConfiguration(database);
 
         InputStream defaultStream = main.getResource(name + ".yml");
         if (defaultStream != null) {
             YamlConfiguration defaultConfig = YamlConfiguration.loadConfiguration(new InputStreamReader(defaultStream));
-            this.databaseConfig.setDefaults(defaultConfig);
+            databaseConfig.setDefaults(defaultConfig);
         }
     }
 }
