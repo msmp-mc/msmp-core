@@ -218,6 +218,7 @@ class MPlayer private constructor(val player: Player, maxLives: Int, remainingLi
             player.canPickupItems = true
             player.health = player.getAttribute(Attribute.GENERIC_MAX_HEALTH)!!.value
             player.foodLevel = 20
+            player.activePotionEffects.forEach { player.removePotionEffect(it.type) }
         }
 
         /**
