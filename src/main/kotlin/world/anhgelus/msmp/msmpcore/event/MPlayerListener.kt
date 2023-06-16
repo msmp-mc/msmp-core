@@ -11,10 +11,12 @@ object MPlayerListener: Listener {
     @EventHandler(priority = EventPriority.HIGH)
     fun onPlayerJoin(e: PlayerJoinEvent) {
         MPlayerManager.connectionOfPlayer(e.player)
+        MPlayerManager.nameTagVisibility(e.player, e)
     }
 
     @EventHandler(priority = EventPriority.HIGH)
     fun onPlayerQuit(e: PlayerQuitEvent) {
         MPlayerManager.get(e.player).updateOnlineStatus(false)
+        MPlayerManager.nameTagVisibility(e.player, e)
     }
 }

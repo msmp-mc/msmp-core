@@ -1,8 +1,16 @@
 package world.anhgelus.msmp.msmpcore.player
 
+import net.minecraft.network.protocol.game.PacketPlayOutSpawnEntity
+import net.minecraft.server.network.PlayerConnection
+import net.minecraft.world.entity.decoration.EntityArmorStand
 import org.bukkit.Bukkit
 import org.bukkit.configuration.ConfigurationSection
+import org.bukkit.craftbukkit.v1_19_R3.entity.CraftArmorStand
+import org.bukkit.craftbukkit.v1_19_R3.entity.CraftPlayer
+import org.bukkit.entity.ArmorStand
+import org.bukkit.entity.EntityType
 import org.bukkit.entity.Player
+import org.bukkit.event.Event
 import world.anhgelus.msmp.msmpcore.MSMPCore
 import java.util.*
 
@@ -40,6 +48,27 @@ object MPlayerManager {
         MSMPCore.LOGGER.info("Player ${player.name} has joined the server")
         val pure =  unloadPlayers[player.uniqueId] ?: return get(player).also { it.updateOnlineStatus() }
         return MPlayer.fromPureData(pure)
+    }
+
+    fun nameTagVisibility(player: Player, e: Event) {
+        if(e.eventName.equals("PlayerQuitEvent")) return
+        val stands: MutableMap<UUID, EntityArmorStand> = mutableMapOf()
+
+        val stand: ArmorStand = player.world.spawnEntity(player.location, EntityType.ARMOR_STAND) as ArmorStand
+        stand.isInvulnerable = true
+        stand.isVisible = false
+        stand.isSmall = true
+        stand.isMarker = true
+        stand.isCustomNameVisible = false
+
+        val standNSM = (stand as CraftArmorStand).handle
+
+        player.addPassenger(stand)
+
+        val packet = PacketPlayOutSpawnEntity(standNSM)
+        stands[player.uniqueId] = standNSM
+        val connection: PlayerConnection = (player as CraftPlayer).handle.b
+        connection.a(packet)
     }
 
     /**
