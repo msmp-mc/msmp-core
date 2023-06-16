@@ -1,9 +1,11 @@
 package world.anhgelus.msmp.msmpcore.player
 
+import net.minecraft.network.protocol.game.PacketPlayOutEntityDestroy
 import net.minecraft.network.protocol.game.PacketPlayOutSpawnEntity
 import net.minecraft.server.network.PlayerConnection
 import net.minecraft.world.entity.decoration.EntityArmorStand
 import org.bukkit.Bukkit
+import org.bukkit.GameMode
 import org.bukkit.configuration.ConfigurationSection
 import org.bukkit.craftbukkit.v1_19_R3.entity.CraftArmorStand
 import org.bukkit.craftbukkit.v1_19_R3.entity.CraftPlayer
@@ -11,12 +13,14 @@ import org.bukkit.entity.ArmorStand
 import org.bukkit.entity.EntityType
 import org.bukkit.entity.Player
 import org.bukkit.event.Event
+import org.bukkit.event.player.PlayerGameModeChangeEvent
 import world.anhgelus.msmp.msmpcore.MSMPCore
 import java.util.*
 
 object MPlayerManager {
     private val players = mutableMapOf<Player, MPlayer>()
     private val unloadPlayers = mutableMapOf<UUID, MPlayer.PureData>()
+    private val stands: MutableMap<UUID, EntityArmorStand> = mutableMapOf()
 
     var maxLives: Int = 0
         private set
@@ -51,9 +55,24 @@ object MPlayerManager {
     }
 
     fun nameTagVisibility(player: Player, e: Event) {
-        if(e.eventName.equals("PlayerQuitEvent")) return
-        val stands: MutableMap<UUID, EntityArmorStand> = mutableMapOf()
 
+        if(e.eventName.equals("PlayerQuitEvent")) {
+            Bukkit.getEntity(stands[player.uniqueId]!!.bukkitEntity.uniqueId)!!.remove()
+            stands.remove(player.uniqueId)
+            return
+        }
+        if(e.eventName.equals("PlayerGameModeChangeEvent")){
+            val event= e as PlayerGameModeChangeEvent
+            if (event.newGameMode == GameMode.SPECTATOR){
+                Bukkit.getEntity(stands[player.uniqueId]!!.bukkitEntity.uniqueId)!!.remove()
+                stands.remove(player.uniqueId)
+                return
+            }
+        }
+        if(stands.containsKey(player.uniqueId)) return
+        setNameHidden(player)
+    }
+    fun setNameHidden(player: Player){
         val stand: ArmorStand = player.world.spawnEntity(player.location, EntityType.ARMOR_STAND) as ArmorStand
         stand.isInvulnerable = true
         stand.isVisible = false
@@ -66,7 +85,7 @@ object MPlayerManager {
         player.addPassenger(stand)
 
         val packet = PacketPlayOutSpawnEntity(standNSM)
-        stands[player.uniqueId] = standNSM
+        stands.put(player.uniqueId,standNSM)
         val connection: PlayerConnection = (player as CraftPlayer).handle.b
         connection.a(packet)
     }
