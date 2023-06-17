@@ -58,6 +58,7 @@ object MPlayerManager {
 
         if(e.eventName.equals("PlayerQuitEvent")) {
             Bukkit.getEntity(stands[player.uniqueId]!!.bukkitEntity.uniqueId)!!.remove()
+            player.removePassenger(stands[player.uniqueId]!!.bukkitEntity)
             stands.remove(player.uniqueId)
             return
         }
@@ -65,6 +66,7 @@ object MPlayerManager {
             val event= e as PlayerGameModeChangeEvent
             if (event.newGameMode == GameMode.SPECTATOR){
                 Bukkit.getEntity(stands[player.uniqueId]!!.bukkitEntity.uniqueId)!!.remove()
+                player.removePassenger(stands[player.uniqueId]!!.bukkitEntity)
                 stands.remove(player.uniqueId)
                 return
             }

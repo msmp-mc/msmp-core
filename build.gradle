@@ -6,7 +6,7 @@ plugins {
 apply plugin: 'maven-publish'
 
 group = 'world.anhgelus.msmp'
-version = '0.7.0'
+version = '0.7.1'
 
 repositories {
     mavenCentral()
